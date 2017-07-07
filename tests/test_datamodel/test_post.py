@@ -1,7 +1,8 @@
-from tests.base import BaseTest
-from datetime import datetime
-import datamodel
 import unittest
+from datetime import datetime
+
+import datamodel
+from tests.test_datamodel.base import BaseTest
 
 __author__ = 'anaeanet'
 
