@@ -1,5 +1,4 @@
 from .abstractdatamodelobject import AbstractDatamodelObject
-from datetime import datetime
 
 __author__ = 'anaeanet'
 
