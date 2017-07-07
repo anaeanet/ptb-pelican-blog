@@ -21,7 +21,7 @@ def init(conv_handler, authorized_users, bot, update, user_data=None):
     # initialize authorized user if not already done earlier
     if user.id in authorized_users and user.id not in user_data:
         logger.info("Initialized user %s (%s) due to first update being received: %s" % (user.first_name, user.id, update))
-        user_data[user.id] = BotUser(BotState.MAIN_MENU)
+        user_data[user.id] = BotUser(None)
 
     # restore previous user data
     bot_user = None if user.id not in user_data else user_data[user.id]

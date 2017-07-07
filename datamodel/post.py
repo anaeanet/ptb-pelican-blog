@@ -67,3 +67,20 @@ class Post(datamodel.AbstractDatamodelObject):
         data['predecessor_post'] = data.pop('predecessor_post', None)
 
         return data
+
+    @staticmethod
+    def de_list(data):
+        """
+        Args:
+            data (list):
+        Returns:
+            List<datamodel.Post>:
+        """
+        if not data:
+            return list()
+
+        posts = list()
+        for post in data:
+            posts.append(Post.de_json(post))
+
+        return posts
