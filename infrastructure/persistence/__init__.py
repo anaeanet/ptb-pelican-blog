@@ -1,0 +1,1 @@
+from .inmemoryimagepersistence import InMemoryImagePersistence

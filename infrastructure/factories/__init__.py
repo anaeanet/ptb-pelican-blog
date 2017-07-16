@@ -1,0 +1,1 @@
+from .imagefactory import ImageFactory
