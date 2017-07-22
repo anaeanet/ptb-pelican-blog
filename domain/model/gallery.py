@@ -20,19 +20,15 @@ class Gallery(Base):
         elif len(title) == 0:
             raise ValueError("Invalid value provided: len(title) must be greater than 0.")
 
-        self.__gallery_id = id
+        self.__id = id
         self.__post_id = post_id
         self.__title = title
         self.__image_repository = image_repository
         self.__cover_image = cover_image
 
-    @classmethod
-    def properties(cls):
-        return ["id", "post_id", "title"]
-
     @property
     def id(self):
-        return self.__gallery_id
+        return self.__id
 
     @property
     def post_id(self):
@@ -49,10 +45,3 @@ class Gallery(Base):
     @property
     def cover_image(self):
         return self.__cover_image
-
-    def __eq__(self, other):
-        if isinstance(self, Gallery) and type(self) == type(other):
-            return self.to_dict() == other.to_dict() \
-                   and self.image_repository.get_images() == other.image_repository.get_images()
-        else:
-            return super().__eq__(other)

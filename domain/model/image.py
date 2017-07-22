@@ -29,7 +29,7 @@ class Image(Base):
         elif caption is not None and len(caption) == 0:
             raise ValueError("Invalid value provided: len(caption) must be greater than 0.")
 
-        self.__image_id = id
+        self.__id = id
         self.__gallery_id = gallery_id
         self.__file_id = file_id
         self.__name = name
@@ -37,13 +37,9 @@ class Image(Base):
         self.__thumb_id = thumb_id
         self.__caption = caption
 
-    @classmethod
-    def properties(cls):
-        return ["id", "gallery_id", "file_id", "name", "file", "thumb_id", "caption"]
-
     @property
     def id(self):
-        return self.__image_id
+        return self.__id
 
     @property
     def gallery_id(self):

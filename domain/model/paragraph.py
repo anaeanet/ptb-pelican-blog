@@ -16,17 +16,13 @@ class Paragraph(Base):
         elif len(text) == 0:
             raise ValueError("Invalid value provided: len(text) must be greater than 0.")
 
-        self.__paragraph_id = id
+        self.__id = id
         self.__post_id = post_id
         self.__text = text
 
-    @classmethod
-    def properties(cls):
-        return ["id", "post_id", "text"]
-
     @property
     def id(self):
-        return self.__paragraph_id
+        return self.__id
 
     @property
     def post_id(self):

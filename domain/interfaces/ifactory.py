@@ -7,8 +7,6 @@ class IFactory(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def assemble(self, *args, **kwargs):
-        self.check_params(*args, **kwargs)
-
         raise NotImplementedError
 
     @abc.abstractmethod

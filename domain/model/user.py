@@ -22,16 +22,12 @@ class User(Base):
         elif len(author_name) == 0:
             raise ValueError("Invalid value provided: len(author_name) must be greater than 0.")
 
-        self.__user_id = id
+        self.__id = id
         self.__author_name = author_name
         self.__post_repository = post_repository
         self.__user_state = user_state
         self.__message_id = message_id
         self.__post_id = post_id
-
-    @classmethod
-    def properties(cls):
-        return ["id", "author_name"]
 
     @property
     def id(self):

@@ -1,4 +1,4 @@
-from domain.model import Base, PostState, Gallery, Image
+from domain.model import Base, PostState, Gallery
 from domain.interfaces import IAuthorRepository, ITagRepository, IParagraphRepository
 from datetime import datetime
 
@@ -32,7 +32,7 @@ class Post(Base):
         elif len(title) == 0:
             raise ValueError("Invalid value provided: len(title) must be greater than 0.")
 
-        self.__post_id = id
+        self.__id = id
         self.__user_id = user_id
         self.__tmsp_creation = tmsp_creation
         self.__title = title
@@ -44,13 +44,9 @@ class Post(Base):
         self.__base_post = base_post
         self.__tmsp_publish = tmsp_publish
 
-    @classmethod
-    def properties(cls):
-        return ["id", "user_id", "tmsp_creation", "title", "post_state", "cover_image", "base_post", "tmsp_publish"]
-
     @property
     def id(self):
-        return self.__post_id
+        return self.__id
 
     @property
     def user_id(self):
@@ -91,13 +87,3 @@ class Post(Base):
     @property
     def tmsp_publish(self):
         return self.__tmsp_publish
-
-    def __eq__(self, other):
-        if isinstance(self, Post) and type(self) == type(other):
-            return self.to_dict() == other.to_dict() \
-                   and self.author_repository.get_authors() == other.author_repository.get_authors() \
-                   and self.tag_repository.get_tags() == other.tag_repository.get_tags() \
-                   and self.paragraph_repository.get_paragraphs() == other.paragraph_repository.get_paragraphs() \
-                   and self.gallery == other.gallery
-        else:
-            return super().__eq__(other)

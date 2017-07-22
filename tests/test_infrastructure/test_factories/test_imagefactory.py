@@ -17,17 +17,25 @@ class ImageFactoryTest(unittest.TestCase):
         self.image_thumb_id = "123_thumb_id"
         self.image_caption = "image_caption"
 
+        self.image = Image(self.image_id,
+                           self.image_gallery_id,
+                           self.image_file_id,
+                           self.image_name,
+                           self.image_file,
+                           thumb_id=self.image_thumb_id,
+                           caption=self.image_caption)
+
         self.args = [self.image_id, self.image_gallery_id, self.image_file_id, self.image_name, self.image_file, self.image_thumb_id, self.image_caption]
-        self.kwargs = {key: value for (key, value) in list(zip(Image.properties(), self.args))}
+        self.kwargs = self.image.to_dict()
 
     def test_factory_fails_for_invalid_arguments(self):
         with self.assertRaises(ValueError):
             ImageFactory().assemble()
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             ImageFactory().assemble(*self.args[:4])
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             ImageFactory().assemble(**{k:v for k, v in self.kwargs.items() if k != "id"})
 
         with self.assertRaises(ValueError):

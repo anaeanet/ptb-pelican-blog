@@ -16,17 +16,13 @@ class Tag(Base):
         elif len(name) == 0:
             raise ValueError("Invalid value provided: len(name) must be greater than 0.")
 
-        self.__tag_id = id
+        self.__id = id
         self.__post_id = post_id
         self.__name = name
 
-    @classmethod
-    def properties(cls):
-        return ["id", "post_id", "name"]
-
     @property
     def id(self):
-        return self.__tag_id
+        return self.__id
 
     @property
     def post_id(self):
