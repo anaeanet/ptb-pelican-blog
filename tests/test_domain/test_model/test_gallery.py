@@ -13,6 +13,7 @@ class GalleryTest(unittest.TestCase):
         self.gallery_post_id = 1
         self.gallery_title = "gallery_title"
         self.gallery_image_repository = ImageRepository()
+        self.cover_image = None
 
         self.image_id = 1
         self.image_gallery_id = 10
@@ -22,23 +23,23 @@ class GalleryTest(unittest.TestCase):
         self.image_thumb_id = "123_thumb_id"
         self.image_caption = "image_caption"
 
-        self.image = ImageFactory().make(*[self.image_id, self.image_gallery_id, self.image_file_id, self.image_name, self.image_file, self.image_thumb_id, self.image_caption])
+        self.image = ImageFactory().assemble(*[self.image_id, self.image_gallery_id, self.image_file_id, self.image_name, self.image_file, self.image_thumb_id, self.image_caption])
 
     def test_gallery_creation_fails_for_invalid_arguments(self):
         with self.assertRaises(TypeError):
-            Gallery(None, self.gallery_post_id, self.gallery_title, self.gallery_image_repository)
+            Gallery(None, self.gallery_post_id, self.gallery_title, self.gallery_image_repository, self.cover_image)
 
         with self.assertRaises(TypeError):
-            Gallery(self.gallery_id, None, self.gallery_title, self.gallery_image_repository)
+            Gallery(self.gallery_id, None, self.gallery_title, self.gallery_image_repository, self.cover_image)
 
         with self.assertRaises(TypeError):
-            Gallery(self.gallery_id, self.gallery_post_id, None, self.gallery_image_repository)
+            Gallery(self.gallery_id, self.gallery_post_id, None, self.gallery_image_repository, self.cover_image)
 
         with self.assertRaises(TypeError):
-            Gallery(self.gallery_id, self.gallery_post_id, self.gallery_title, None)
+            Gallery(self.gallery_id, self.gallery_post_id, self.gallery_title, None, self.cover_image)
 
         with self.assertRaises(ValueError):
-            Gallery(self.gallery_id, self.gallery_post_id, "", self.gallery_image_repository)
+            Gallery(self.gallery_id, self.gallery_post_id, "", self.gallery_image_repository, self.cover_image)
 
     def test_gallery_creation_successful(self):
         gallery = Gallery(self.gallery_id, self.gallery_post_id, self.gallery_title, self.gallery_image_repository)

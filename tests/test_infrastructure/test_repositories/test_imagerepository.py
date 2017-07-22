@@ -17,7 +17,7 @@ class ImageRepositoryTest(unittest.TestCase):
         self.image_thumb_id = "123_thumb_id"
         self.image_caption = "image_caption"
 
-        self.image = ImageFactory().make(*[self.image_id, self.image_gallery_id, self.image_file_id, self.image_name, self.image_file, self.image_thumb_id, self.image_caption])
+        self.image = ImageFactory().assemble(*[self.image_id, self.image_gallery_id, self.image_file_id, self.image_name, self.image_file, self.image_thumb_id, self.image_caption])
 
     def test_persisted_image_can_be_retrieved_from_persistence(self):
         repo = ImageRepository()

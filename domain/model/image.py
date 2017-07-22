@@ -11,8 +11,8 @@ class Image(Base):
                 and isinstance(file_id, str)
                 and isinstance(name, str)
                 and file is not None
-                and (thumb_id is not None or isinstance(thumb_id, str))
-                and (caption is not None or isinstance(caption, str))):
+                and (thumb_id is None or isinstance(thumb_id, str))
+                and (caption is None or isinstance(caption, str))):
             raise TypeError(
                 "Invalid parameter type(s). Expected int, int, str, str, not None, str/None, str/None "
                 + "but got %s, %s, %s, %s, %s, %s, %s."

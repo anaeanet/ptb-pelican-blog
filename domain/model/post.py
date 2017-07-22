@@ -9,7 +9,7 @@ class Post(Base):
 
     def __init__(self, id, user_id, tmsp_creation, title, post_state
                  , author_repository, tag_repository, paragraph_repository
-                 , gallery=None, cover_image=None, base_post=None, tmsp_publish=None):
+                 , gallery=None, base_post=None, tmsp_publish=None):
         if not (isinstance(id, int)
                 and isinstance(user_id, int)
                 and isinstance(tmsp_creation, datetime)
@@ -18,16 +18,16 @@ class Post(Base):
                 and isinstance(author_repository, IAuthorRepository)
                 and isinstance(tag_repository, ITagRepository)
                 and isinstance(paragraph_repository, IParagraphRepository)
-                and (gallery is not None or isinstance(gallery, Gallery))
-                and (cover_image is not None or isinstance(cover_image, Image))
-                and (base_post is not None or isinstance(base_post, Post))
-                and (tmsp_publish is not None or isinstance(tmsp_publish, datetime))):
+                and (gallery is None or isinstance(gallery, Gallery))
+                and (base_post is None or isinstance(base_post, Post))
+                and (tmsp_publish is None or isinstance(tmsp_publish, datetime))):
             raise TypeError(
-                "Invalid parameter type(s). Expected int, int, datetime, str, PostState, IAuthorRepository, ITagRepository, IParagraphRepository, Gallery/None, Image/None, Post/None, datetime/None "
-                + "but got %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s."
+                "Invalid parameter type(s). Expected int, int, datetime, str, PostState, IAuthorRepository, "
+                + "ITagRepository, IParagraphRepository, Gallery/None, Post/None, datetime/None "
+                + "but got %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s."
                 % (type(id).__name__, type(user_id).__name__, type(tmsp_creation).__name__, type(title).__name__
                    , type(post_state).__name__, type(author_repository).__name__, type(tag_repository).__name__
-                   , type(paragraph_repository).__name__, type(gallery).__name__, type(cover_image).__name__
+                   , type(paragraph_repository).__name__, type(gallery).__name__
                    , type(base_post).__name__, type(tmsp_publish).__name__))
         elif len(title) == 0:
             raise ValueError("Invalid value provided: len(title) must be greater than 0.")
@@ -41,7 +41,6 @@ class Post(Base):
         self.__tag_repository = tag_repository
         self.__paragraph_repository = paragraph_repository
         self.__gallery = gallery
-        self.__cover_image = cover_image
         self.__base_post = base_post
         self.__tmsp_publish = tmsp_publish
 
@@ -84,10 +83,6 @@ class Post(Base):
     @property
     def gallery(self):
         return self.__gallery
-
-    @property
-    def cover_image(self):
-        return self.__cover_image
 
     @property
     def base_post(self):

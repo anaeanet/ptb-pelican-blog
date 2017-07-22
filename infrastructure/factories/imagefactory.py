@@ -6,20 +6,19 @@ __author__ = 'anaeanet'
 
 class ImageFactory(IFactory):
 
-    def make(self, *args, **kwargs):
-        super().check_params(*args, **kwargs)
-
+    def assemble(self, *args, **kwargs):
         keys = Image.properties()
         values = []
 
-        if args:
+        if args and not kwargs:
             for i in range(min(len(args), len(keys))):
                 values.append(args[i])
-
-        elif kwargs:
+        elif kwargs and not args:
             for k in keys:
                 if k in kwargs:
                     values.append(kwargs[k])
+        else:
+            raise ValueError("Invalid parameter combination. Exactly one of *args or **kwargs must be specified.")
 
         if len(values) == len(keys):
             item = Image(values[0], values[1], values[2], values[3], values[4], values[5], values[6])
@@ -29,5 +28,5 @@ class ImageFactory(IFactory):
 
         return item
 
-    def take_apart(self, image):
+    def disassemble(self, image):
         return image.to_dict()

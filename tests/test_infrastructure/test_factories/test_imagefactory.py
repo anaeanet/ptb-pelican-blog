@@ -22,19 +22,19 @@ class ImageFactoryTest(unittest.TestCase):
 
     def test_factory_fails_for_invalid_arguments(self):
         with self.assertRaises(ValueError):
-            ImageFactory().make()
+            ImageFactory().assemble()
 
         with self.assertRaises(ValueError):
-            ImageFactory().make(*self.args[:4])
+            ImageFactory().assemble(*self.args[:4])
 
         with self.assertRaises(ValueError):
-            ImageFactory().make(**{k:v for k,v in self.kwargs.items() if k != "id"})
+            ImageFactory().assemble(**{k:v for k, v in self.kwargs.items() if k != "id"})
 
         with self.assertRaises(ValueError):
-            ImageFactory().make(*self.args, **self.kwargs)
+            ImageFactory().assemble(*self.args, **self.kwargs)
 
     def test_factory_makes_image_from_args(self):
-        image = ImageFactory().make(*self.args)
+        image = ImageFactory().assemble(*self.args)
 
         self.assertTrue(isinstance(image, Image))
         self.assertEqual(image.id, self.image_id)
@@ -45,7 +45,7 @@ class ImageFactoryTest(unittest.TestCase):
         self.assertEqual(image.caption, self.image_caption)
 
     def test_factory_makes_image_from_kwargs(self):
-        image = ImageFactory().make(**self.kwargs)
+        image = ImageFactory().assemble(**self.kwargs)
 
         self.assertTrue(isinstance(image, Image))
         self.assertEqual(image.id, self.image_id)

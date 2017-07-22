@@ -15,15 +15,15 @@ class ImageRepository(IImageRepository):
         images = []
 
         for raw_img in self.__persistence.retrieve(**filters):
-            images.append(self.__factory.make(**raw_img))
+            images.append(self.__factory.assemble(**raw_img))
 
         return images
 
     def get_image_by_id(self, id):
-        return self.__factory.make(**self.__persistence.retrieve_by_id(id))
+        return self.__factory.assemble(**self.__persistence.retrieve_by_id(id))
 
     def add_image(self, image):
-        return self.__persistence.persist(self.__factory.take_apart(image))
+        return self.__persistence.persist(self.__factory.disassemble(image))
 
     def remove_image(self, id):
         return self.__persistence.delete(id)

@@ -4,4 +4,4 @@ __author__ = 'anaeanet'
 
 
 class UserState(Enum):
-    START, MAIN_MENU = range(2)
+    MAIN_MENU = 0

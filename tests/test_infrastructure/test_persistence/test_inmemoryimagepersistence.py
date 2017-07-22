@@ -16,10 +16,10 @@ class InMemoryImagePersistenceTest(unittest.TestCase):
         self.image_thumb_id = "123_thumb_id"
         self.image_caption = "image_caption"
 
-        self.image1 = ImageFactory().make(
+        self.image1 = ImageFactory().assemble(
             *[self.image_id, self.image_gallery_id, self.image_file_id, self.image_name, self.image_file, self.image_thumb_id, self.image_caption]
         )
-        self.image2 = ImageFactory().make(
+        self.image2 = ImageFactory().assemble(
             *[2, self.image_gallery_id, self.image_file_id, self.image_name, self.image_file, self.image_thumb_id, self.image_caption]
         )
 
@@ -28,7 +28,7 @@ class InMemoryImagePersistenceTest(unittest.TestCase):
         persistence.persist(self.image1.to_dict())
 
         self.assertEqual(self.image1.to_dict(), persistence.retrieve()[0])
-        self.assertEqual(self.image1, ImageFactory().make(**persistence.retrieve()[0]))
+        self.assertEqual(self.image1, ImageFactory().assemble(**persistence.retrieve()[0]))
 
     def test_can_persist_and_retrieve_multiple_images(self):
         persistence = InMemoryImagePersistence()
@@ -37,8 +37,8 @@ class InMemoryImagePersistenceTest(unittest.TestCase):
 
         self.assertEqual(self.image1.to_dict(), persistence.retrieve_by_id(self.image1.id))
         self.assertEqual(self.image2.to_dict(), persistence.retrieve_by_id(self.image2.id))
-        self.assertEqual(self.image1, ImageFactory().make(**persistence.retrieve_by_id(self.image1.id)))
-        self.assertEqual(self.image2, ImageFactory().make(**persistence.retrieve_by_id(self.image2.id)))
+        self.assertEqual(self.image1, ImageFactory().assemble(**persistence.retrieve_by_id(self.image1.id)))
+        self.assertEqual(self.image2, ImageFactory().assemble(**persistence.retrieve_by_id(self.image2.id)))
 
     def test_can_delete_image(self):
         persistence = InMemoryImagePersistence()
