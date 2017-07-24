@@ -3,20 +3,20 @@ import abc
 __author__ = 'anaeanet'
 
 
-class IUserRepository(metaclass=abc.ABCMeta):
+class IUserPersistence(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
-    def get_users(self, **filters):
+    def persist(self, user_data):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_user_by_id(self, user_id):
+    def retrieve(self, **filters):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def add_user(self, user):
+    def retrieve_by_id(self, id):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def remove_user(self, user_id):
+    def delete(self, id):
         raise NotImplementedError

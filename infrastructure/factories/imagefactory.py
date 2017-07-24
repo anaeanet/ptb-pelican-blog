@@ -9,13 +9,13 @@ class ImageFactory(IFactory):
     def assemble(self, *args, **kwargs):
 
         if args and not kwargs:
-            item = Image(*args)
+            image = Image(*args)
         elif kwargs and not args:
-            item = Image(**kwargs)
+            image = Image(**kwargs)
         else:
             raise ValueError("Invalid parameter combination. Exactly one of *args or **kwargs must be specified.")
 
-        return item
+        return image
 
     def disassemble(self, image):
         return image.to_dict()

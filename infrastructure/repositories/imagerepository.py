@@ -7,9 +7,9 @@ __author__ = 'anaeanet'
 
 class ImageRepository(IImageRepository):
 
-    def __init__(self, persistence=None, factory=None):
-        self.__persistence = InMemoryImagePersistence() if persistence is None else persistence
-        self.__factory = ImageFactory() if factory is None else factory
+    def __init__(self, persistence, factory):
+        self.__persistence = persistence
+        self.__factory = factory
 
     def get_images(self, **filters):
         images = []

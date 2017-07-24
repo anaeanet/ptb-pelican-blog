@@ -32,12 +32,6 @@ class ImageFactoryTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             ImageFactory().assemble()
 
-        with self.assertRaises(TypeError):
-            ImageFactory().assemble(*self.args[:4])
-
-        with self.assertRaises(TypeError):
-            ImageFactory().assemble(**{k:v for k, v in self.kwargs.items() if k != "id"})
-
         with self.assertRaises(ValueError):
             ImageFactory().assemble(*self.args, **self.kwargs)
 

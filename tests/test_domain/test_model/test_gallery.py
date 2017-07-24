@@ -1,5 +1,6 @@
 import unittest
 from domain.model import Gallery
+from infrastructure.persistence import InMemoryImagePersistence
 from infrastructure.repositories import ImageRepository
 from infrastructure.factories import ImageFactory
 
@@ -12,7 +13,7 @@ class GalleryTest(unittest.TestCase):
         self.gallery_id = 1
         self.gallery_post_id = 1
         self.gallery_title = "gallery_title"
-        self.gallery_image_repository = ImageRepository()
+        self.gallery_image_repository = ImageRepository(InMemoryImagePersistence(), ImageFactory())
         self.cover_image = None
 
         self.image_id = 1

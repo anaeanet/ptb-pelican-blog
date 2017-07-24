@@ -4,3 +4,4 @@ from .iimagerepository import IImageRepository
 from .iparagraphrepository import IParagraphRepository
 from .ipostrepository import IPostRepository
 from .itagrepository import ITagRepository
+from .iuserrepository import IUserRepository

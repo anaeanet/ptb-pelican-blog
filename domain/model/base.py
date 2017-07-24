@@ -15,7 +15,7 @@ class Base(metaclass=abc.ABCMeta):
                 # strip any class name prefix from the attribute name
                 param_name = key if key.find("__") < 0 else key[key.find("__")+2:]
 
-                if hasattr(value, 'to_dict'):
+                if value is not None and hasattr(value, 'to_dict'):
                     data[param_name] = value.to_dict()
                 else:
                     data[param_name] = value

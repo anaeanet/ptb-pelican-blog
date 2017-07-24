@@ -6,7 +6,7 @@ __author__ = 'anaeanet'
 class IImagePersistence(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
-    def persist(self, image_dict):
+    def persist(self, image_data):
         raise NotImplementedError
 
     @abc.abstractmethod
