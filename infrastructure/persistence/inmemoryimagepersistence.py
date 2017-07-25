@@ -33,7 +33,7 @@ class InMemoryImagePersistence(IImagePersistence):
         return [v for v in self.__data.values() if self.__matches_filters(v, **filters)]
 
     def retrieve_by_id(self, image_id):
-        return self.__data[image_id]
+        return self.__data[image_id] if image_id in self.__data else {}
 
     def delete(self, image_id):
         result = False

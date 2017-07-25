@@ -7,7 +7,7 @@ __author__ = 'anaeanet'
 class DBHelper:
 
     def __init__(self, db_name):
-        self.__conn = sqlite3.connect(db_name)
+        self.__conn = sqlite3.connect(db_name, check_same_thread=False)
         self.setup()
 
     def setup(self):
@@ -40,7 +40,8 @@ class DBHelper:
     # -------------------------------------------------- user ----------------------------------------------------------
 
     def get_users(self, **filters):
-        column_names = [x[1] for x in self.__conn.execute("PRAGMA table_info(user)")]
+        #column_names = [x[1] for x in self.__conn.execute("PRAGMA table_info(user)")]
+        column_names = ["user_id", "user_name", "user_state", "message_id", "post_id"]
 
         stmt = "SELECT * FROM user"
         args = []
@@ -60,7 +61,7 @@ class DBHelper:
         return user_data_list
 
     def get_user(self, user_id):
-        user = None
+        user = {}
 
         users = self.get_users(user_id=user_id)
         if len(users) == 1:

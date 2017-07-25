@@ -13,7 +13,7 @@ class SQLUserPersistence(IUserPersistence):
         pk = "user_id"
 
         user = self.__db.get_user(user_data[pk] if pk in user_data else -1)
-        if user is None:
+        if not user:
             return self.__db.add_user(**user_data)
         else:
             return self.__db.update_user(**user_data)

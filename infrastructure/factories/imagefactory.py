@@ -8,7 +8,9 @@ class ImageFactory(IFactory):
 
     def assemble(self, *args, **kwargs):
 
-        if args and not kwargs:
+        if not (args or kwargs):
+            image = None
+        elif args and not kwargs:
             image = Image(*args)
         elif kwargs and not args:
             image = Image(**kwargs)

@@ -8,7 +8,10 @@ class UserFactory(IFactory):
 
     def assemble(self, *args, **kwargs):
 
-        if args and not kwargs:
+        if not (args or kwargs):
+            user = None
+
+        elif args and not kwargs:
             user = User(args[0], args[1], UserState(args[2]), args[3], args[4])
 
         elif kwargs and not args:

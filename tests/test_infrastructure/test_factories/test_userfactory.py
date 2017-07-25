@@ -34,9 +34,6 @@ class UserFactoryTest(unittest.TestCase):
 
     def test_factory_fails_for_invalid_arguments(self):
         with self.assertRaises(ValueError):
-            self.factory.assemble()
-
-        with self.assertRaises(ValueError):
             self.factory.assemble(*self.args, **self.kwargs)
 
     def test_factory_makes_user_from_args(self):
