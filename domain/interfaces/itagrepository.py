@@ -10,7 +10,7 @@ class ITagRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_tag_by_id(self, id):
+    def get_tag_by_id(self, tag_id):
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -18,5 +18,5 @@ class ITagRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def remove_tag(self, id):
+    def remove_tag(self, tag_id):
         raise NotImplementedError

@@ -7,3 +7,5 @@ class PostState(Enum):
     DRAFT = "draft"
     PUBLISHED = "published"
 
+    def to_dict(self):
+        return self.value

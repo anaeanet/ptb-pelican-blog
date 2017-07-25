@@ -1,7 +1,6 @@
 import unittest
-from domain.model import User, UserState
+from domain.model import User
 from infrastructure.factories import UserFactory
-from infrastructure.repositories import PostRepository
 
 __author__ = 'anaeanet'
 
@@ -11,55 +10,58 @@ class UserFactoryTest(unittest.TestCase):
     def setUp(self):
         self.user_id = 1
         self.user_name = "anaea"
-        self.user_state = UserState.MAIN_MENU
-        #self.post_repository = PostRepository(None, None)
+        self.user_state = 0
         self.message_id = None
         self.post_id = None
 
-        self.user = User(self.user_id
-                         , self.user_name
-                         , self.user_state
-                         #, self.post_repository
-                         , message_id=self.message_id
-                         , post_id=self.post_id)
+        self.args = [
+            self.user_id
+            , self.user_name
+            , self.user_state
+            , self.message_id
+            , self.post_id
+        ]
 
-        self.args = [self.user_id
-                         , self.user_name
-                         , self.user_state.value
-                         #, self.post_repository
-                         , self.message_id
-                         , self.post_id]
+        self.kwargs = {
+            "user_id": self.user_id
+            , "user_name": self.user_name
+            , "user_state": self.user_state
+            , "message_id": self.message_id
+            , "post_id": self.post_id
+        }
 
-        self.kwargs = self.user.to_dict()
+        self.factory = UserFactory()
 
     def test_factory_fails_for_invalid_arguments(self):
         with self.assertRaises(ValueError):
-            UserFactory().assemble()
+            self.factory.assemble()
 
         with self.assertRaises(ValueError):
-            UserFactory().assemble(*self.args, **self.kwargs)
+            self.factory.assemble(*self.args, **self.kwargs)
 
     def test_factory_makes_user_from_args(self):
-        user = UserFactory().assemble(*self.args)
+        user = self.factory.assemble(*self.args)
 
         self.assertTrue(isinstance(user, User))
         self.assertEqual(user.user_id, self.user_id)
         self.assertEqual(user.user_name, self.user_name)
-        self.assertEqual(user.user_state, self.user_state)
-        #self.assertEqual(user.post_repository, self.post_repository)
+        self.assertEqual(user.user_state.value, self.user_state)
         self.assertEqual(user.message_id, self.message_id)
         self.assertEqual(user.post_id, self.post_id)
 
     def test_factory_makes_user_from_kwargs(self):
-        user = UserFactory().assemble(**self.kwargs)
+        user = self.factory.assemble(**self.kwargs)
 
         self.assertTrue(isinstance(user, User))
         self.assertEqual(user.user_id, self.user_id)
         self.assertEqual(user.user_name, self.user_name)
-        self.assertEqual(user.user_state, self.user_state)
-        #self.assertEqual(user.post_repository, self.post_repository)
+        self.assertEqual(user.user_state.value, self.user_state)
         self.assertEqual(user.message_id, self.message_id)
         self.assertEqual(user.post_id, self.post_id)
+
+    def test_factory_disassembles_user_successfully(self):
+        self.assertEqual(self.kwargs, self.factory.disassemble(self.factory.assemble(*self.args)))
+        self.assertEqual(self.kwargs, self.factory.disassemble(self.factory.assemble(**self.kwargs)))
 
 
 if __name__ == '__main__':

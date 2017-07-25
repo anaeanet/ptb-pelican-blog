@@ -10,15 +10,14 @@ class Base(metaclass=abc.ABCMeta):
 
         for key in iter(self.__dict__):
             value = self.__dict__[key]
-            if value is not None:
 
-                # strip any class name prefix from the attribute name
-                param_name = key if key.find("__") < 0 else key[key.find("__")+2:]
+            # strip any class name prefix from the attribute name
+            param_name = key if key.find("__") < 0 else key[key.find("__")+2:]
 
-                if value is not None and hasattr(value, 'to_dict'):
-                    data[param_name] = value.to_dict()
-                else:
-                    data[param_name] = value
+            if value is not None and hasattr(value, 'to_dict'):
+                data[param_name] = value.to_dict()
+            else:
+                data[param_name] = value
 
         return data
 

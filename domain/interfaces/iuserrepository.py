@@ -14,7 +14,7 @@ class IUserRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def add_user(self, user):
+    def save_user(self, user):
         raise NotImplementedError
 
     @abc.abstractmethod

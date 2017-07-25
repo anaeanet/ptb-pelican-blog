@@ -12,16 +12,16 @@ class UserRepository(IUserRepository):
     def get_users(self, **filters):
         users = []
 
-        for raw_user in self.__persistence.retrieve(**filters):
-            users.append(self.__factory.assemble(*raw_user))
+        for user_data in self.__persistence.retrieve(**filters):
+            users.append(self.__factory.assemble(**user_data))
 
         return users
 
     def get_user_by_id(self, user_id):
-        return self.__factory.assemble(*self.__persistence.retrieve_by_id(user_id))
+        return self.__factory.assemble(**self.__persistence.retrieve_by_id(user_id))
 
-    def add_user(self, user):
-        return self.__persistence.persist(self.__factory.disassemble(user))
+    def save_user(self, user):
+        return self.__persistence.persist(**self.__factory.disassemble(user))
 
     def remove_user(self, user_id):
         return self.__persistence.delete(user_id)

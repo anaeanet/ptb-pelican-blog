@@ -10,13 +10,13 @@ class IPostRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_post_by_id(self, id):
+    def get_post_by_id(self, post_id):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def add_post(self, post):
+    def save_post(self, post):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def remove_post(self, id):
+    def remove_post(self, post_id):
         raise NotImplementedError

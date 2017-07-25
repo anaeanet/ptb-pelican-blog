@@ -19,11 +19,12 @@ class InMemoryImagePersistence(IImagePersistence):
 
         return result
 
-    def persist(self, image_data):
+    def persist(self, **image_data):
+        pk = "image_id"
         result = False
 
-        if image_data and "id" in image_data:
-            self.__data[image_data["id"]] = image_data
+        if image_data and pk in image_data:
+            self.__data[image_data[pk]] = image_data
             result = True
 
         return result
@@ -31,14 +32,14 @@ class InMemoryImagePersistence(IImagePersistence):
     def retrieve(self, **filters):
         return [v for v in self.__data.values() if self.__matches_filters(v, **filters)]
 
-    def retrieve_by_id(self, id):
-        return self.__data[id]
+    def retrieve_by_id(self, image_id):
+        return self.__data[image_id]
 
-    def delete(self, id):
+    def delete(self, image_id):
         result = False
 
-        if id in self.__data:
-            self.__data.pop(id)
+        if image_id in self.__data:
+            self.__data.pop(image_id)
             result = True
 
         return result

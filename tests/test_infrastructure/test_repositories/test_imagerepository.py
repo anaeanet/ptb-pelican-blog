@@ -10,40 +10,57 @@ __author__ = 'anaeanet'
 class ImageRepositoryTest(unittest.TestCase):
 
     def setUp(self):
-        self.image_id = 1
         self.image_gallery_id = 10
-        self.image_file_id = "123_file_id"
+        self.image_id = 1
         self.image_name = "file_name"
         self.image_file = "file"
         self.image_thumb_id = "123_thumb_id"
         self.image_caption = "image_caption"
 
-        self.image = ImageFactory().assemble(*[self.image_id, self.image_gallery_id, self.image_file_id, self.image_name, self.image_file, self.image_thumb_id, self.image_caption])
+        self.factory = ImageFactory()
+        self.repo = ImageRepository(InMemoryImagePersistence(), self.factory)
 
-    def test_persisted_image_can_be_retrieved_from_persistence(self):
-        repo = ImageRepository(InMemoryImagePersistence(), ImageFactory())
-        repo.add_image(self.image)
+        self.image = self.factory.assemble(*[
+            self.image_gallery_id
+            , self.image_id
+            , self.image_name
+            , self.image_file
+            , self.image_thumb_id
+            , self.image_caption
+        ])
 
-        self.assertEqual(self.image, repo.get_images()[0])
+    def test_image_added_successfully(self):
+        self.assertTrue(self.repo.save_image(self.image))
+        self.assertEqual(self.image, self.repo.get_images()[0])
 
-    def test_persisted_image_can_be_retrieved_from_persistence_by_id(self):
-        repo = ImageRepository(InMemoryImagePersistence(), ImageFactory())
-        repo.add_image(self.image)
+    def test_added_image_can_be_retrieved_from_repo_by_id(self):
+        self.assertTrue(self.repo.save_image(self.image))
+        self.assertEqual(self.image, self.repo.get_image_by_id(self.image_id))
 
-        self.assertEqual(self.image, repo.get_image_by_id(self.image_id))
-
-    def test_persisted_image_can_be_retrieved_from_persistence_by_filter(self):
-        repo = ImageRepository(InMemoryImagePersistence(), ImageFactory())
-        repo.add_image(self.image)
-
-        self.assertEqual(self.image, repo.get_images(**{"id": self.image.id})[0])
+    def test_added_image_can_be_retrieved_from_repo_by_filter(self):
+        self.assertTrue(self.repo.save_image(self.image))
+        self.assertEqual(self.image, self.repo.get_images(image_id=self.image_id)[0])
 
     def test_image_can_be_deleted_from_repo(self):
-        repo = ImageRepository(InMemoryImagePersistence(), ImageFactory())
-        repo.add_image(self.image)
+        self.assertTrue(self.repo.save_image(self.image))
+        self.assertTrue(self.repo.remove_image(self.image_id))
 
-        self.assertTrue(repo.remove_image(self.image.id))
-        self.assertEqual(repo.get_images(), [])
+    def test_image_updated_successfully(self):
+        self.assertTrue(self.repo.save_image(self.image))
+        self.assertEqual(self.image, self.repo.get_image_by_id(self.image_id))
+
+        updated_image = self.factory.assemble(*[
+            self.image_gallery_id
+            , self.image_id
+            , self.image_name+"_updated"
+            , self.image_file
+            , self.image_thumb_id
+            , self.image_caption+"_updated"
+        ])
+
+        self.assertTrue(self.repo.save_image(updated_image))
+        self.assertEqual(updated_image, self.repo.get_image_by_id(self.image_id))
+        self.assertNotEqual(self.image, self.repo.get_image_by_id(self.image_id))
 
 
 if __name__ == '__main__':

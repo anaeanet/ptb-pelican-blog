@@ -14,9 +14,9 @@ class IUserPersistence(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def retrieve_by_id(self, id):
+    def retrieve_by_id(self, user_id):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def delete(self, id):
+    def delete(self, user_id):
         raise NotImplementedError

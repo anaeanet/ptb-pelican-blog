@@ -10,13 +10,13 @@ class IParagraphRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_paragraph_by_id(self, id):
+    def get_paragraph_by_id(self, paragraph_id):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def add_paragraph(self, paragraph):
+    def save_paragraph(self, paragraph):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def remove_paragraph(self, id):
+    def remove_paragraph(self, paragraph_id):
         raise NotImplementedError

@@ -5,10 +5,6 @@ __author__ = 'anaeanet'
 
 
 class DBHelper:
-    """
-    Data Access Module (DAM) providing an interface
-    to separate bot implementation from specific database implementation.
-    """
 
     def __init__(self, db_name):
         self.__conn = sqlite3.connect(db_name)
@@ -18,11 +14,11 @@ class DBHelper:
 
         # create required tables
         tbl_statements = [
-              "CREATE TABLE IF NOT EXISTS user (user_id INTEGER NOT NULL PRIMARY KEY"
-                                                + ", user_name TEXT NOT NULL"
-                                                + ", user_state INTEGER NOT NULL"
-                                                + ", message_id INTEGER"
-                                                + ", post_id INTEGER)"
+            "CREATE TABLE IF NOT EXISTS user (user_id INTEGER NOT NULL PRIMARY KEY"
+            + ", user_name TEXT NOT NULL"
+            + ", user_state INTEGER NOT NULL"
+            + ", message_id INTEGER"
+            + ", post_id INTEGER)"
         ]
 
         for stmt in tbl_statements:
@@ -44,6 +40,8 @@ class DBHelper:
     # -------------------------------------------------- user ----------------------------------------------------------
 
     def get_users(self, **filters):
+        column_names = [x[1] for x in self.__conn.execute("PRAGMA table_info(user)")]
+
         stmt = "SELECT * FROM user"
         args = []
 
@@ -52,12 +50,19 @@ class DBHelper:
             for key, value in filters.items():
                 args.append(value)
 
-        return [[x[0], x[1], x[2], x[3], x[4]] for x in self.__conn.execute(stmt, tuple(args))]
+        user_data_list = []
+        for record in [x for x in self.__conn.execute(stmt, tuple(args))]:
+            user_data = dict()
+            for column_index in range(len(column_names)):
+                user_data[column_names[column_index]] = record[column_index]
+            user_data_list.append(user_data)
+
+        return user_data_list
 
     def get_user(self, user_id):
         user = None
 
-        users = self.get_users(**{"user_id": user_id})
+        users = self.get_users(user_id=user_id)
         if len(users) == 1:
             user = users[0]
 
@@ -79,8 +84,9 @@ class DBHelper:
 
         return cursor.lastrowid
 
-    def update_user(self, user_id, user_name, user_state, message_id=None, post_id=None):
-        param_dict = dict({key: value for key, value in locals().items() if key != "self"})
+    def update_user(self, user_id, **kwargs):
+        column_names = [x[1] for x in self.__conn.execute("PRAGMA table_info(user)")]
+        param_dict = dict({key: value for key, value in kwargs.items() if key in column_names})
 
         stmt = "UPDATE user SET " + " = ?, ".join(param_dict.keys()) + " = ? WHERE user_id = ?"
         args = []
@@ -100,8 +106,6 @@ class DBHelper:
         cursor = self.__conn.cursor()
 
         if user is not None:
-            # TODO delete user's posts
-
             stmt = "DELETE FROM user WHERE user_id = ?"
             args = [user_id]
             cursor.execute(stmt, tuple(args))

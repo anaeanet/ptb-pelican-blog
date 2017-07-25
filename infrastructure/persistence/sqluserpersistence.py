@@ -9,7 +9,7 @@ class SQLUserPersistence(IUserPersistence):
     def __init__(self, db_name):
         self.__db = DBHelper(db_name)
 
-    def persist(self, user_data):
+    def persist(self, **user_data):
         pk = "user_id"
 
         user = self.__db.get_user(user_data[pk] if pk in user_data else -1)
@@ -21,8 +21,8 @@ class SQLUserPersistence(IUserPersistence):
     def retrieve(self, **filters):
         return [v for v in self.__db.get_users(**filters)]
 
-    def retrieve_by_id(self, id):
-        return self.__db.get_user(id)
+    def retrieve_by_id(self, user_id):
+        return self.__db.get_user(user_id)
 
-    def delete(self, id):
-        return self.__db.delete_user(id)
+    def delete(self, user_id):
+        return self.__db.delete_user(user_id)

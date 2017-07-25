@@ -14,7 +14,7 @@ class IImageRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def add_image(self, image):
+    def save_image(self, image):
         raise NotImplementedError
 
     @abc.abstractmethod

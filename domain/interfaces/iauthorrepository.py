@@ -10,7 +10,7 @@ class IAuthorRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_author_by_id(self, id):
+    def get_author_by_id(self, author_id):
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -18,5 +18,5 @@ class IAuthorRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def remove_author(self, id):
+    def remove_author(self, author_id):
         raise NotImplementedError
