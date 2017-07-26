@@ -4,7 +4,7 @@ __author__ = 'anaeanet'
 
 
 class UserState(Enum):
-    INIT, MAIN_MENU = range(2)
+    MAIN_MENU = 0
 
     def to_dict(self):
         return self.value

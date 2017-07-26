@@ -16,7 +16,7 @@ class DBHelper:
         tbl_statements = [
             "CREATE TABLE IF NOT EXISTS user (user_id INTEGER NOT NULL PRIMARY KEY"
             + ", user_name TEXT NOT NULL"
-            + ", user_state INTEGER NOT NULL"
+            + ", user_state INTEGER"
             + ", message_id INTEGER"
             + ", post_id INTEGER)"
         ]
@@ -40,8 +40,7 @@ class DBHelper:
     # -------------------------------------------------- user ----------------------------------------------------------
 
     def get_users(self, **filters):
-        #column_names = [x[1] for x in self.__conn.execute("PRAGMA table_info(user)")]
-        column_names = ["user_id", "user_name", "user_state", "message_id", "post_id"]
+        column_names = [x[1] for x in self.__conn.execute("PRAGMA table_info(user)")]
 
         stmt = "SELECT * FROM user"
         args = []
@@ -69,7 +68,7 @@ class DBHelper:
 
         return user
 
-    def add_user(self, user_id, user_name, user_state, message_id=None, post_id=None):
+    def add_user(self, user_id, user_name, user_state=None, message_id=None, post_id=None):
         param_dict = dict({key: value for key, value in locals().items() if key != "self"})
 
         stmt = "INSERT INTO user (" + ",".join(param_dict.keys()) + ") " \

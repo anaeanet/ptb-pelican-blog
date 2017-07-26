@@ -17,7 +17,7 @@ class UserFactory(IFactory):
         elif kwargs and not args:
 
             for key, value in kwargs.items():
-                kwargs[key] = UserState(value) if key == "user_state" else value
+                kwargs[key] = UserState(value) if key == "user_state" and value is not None else value
 
             user = User(**kwargs)
 
@@ -27,4 +27,4 @@ class UserFactory(IFactory):
         return user
 
     def disassemble(self, user):
-        return {key: value for key, value in user.to_dict().items() if key != "post_repository"}
+        return {key: value for key, value in user.to_dict().items() if key != "posts"}
