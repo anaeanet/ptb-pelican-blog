@@ -18,6 +18,3 @@ class ImageFactory(IFactory):
             raise ValueError("Invalid parameter combination. Exactly one of *args or **kwargs must be specified.")
 
         return image
-
-    def disassemble(self, image):
-        return image.to_dict()

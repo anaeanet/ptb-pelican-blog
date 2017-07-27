@@ -68,8 +68,12 @@ class DBHelper:
 
         return user
 
-    def add_user(self, user_id, user_name, user_state=None, message_id=None, post_id=None):
-        param_dict = dict({key: value for key, value in locals().items() if key != "self"})
+    def add_user(self, user_id, user_name, **optional_params):
+        column_names = [x[1] for x in self.__conn.execute("PRAGMA table_info(user)")
+                        if x[1] not in ["user_id", "user_name"]]
+        param_dict = dict({key: value for key, value in optional_params.items() if key in column_names})
+        param_dict["user_id"] = user_id
+        param_dict["user_name"] = user_name
 
         stmt = "INSERT INTO user (" + ",".join(param_dict.keys()) + ") " \
                + "VALUES (" + ",".join(["?" for x in param_dict.keys()]) + ")"
@@ -85,8 +89,9 @@ class DBHelper:
         return cursor.lastrowid
 
     def update_user(self, user_id, **kwargs):
-        column_names = [x[1] for x in self.__conn.execute("PRAGMA table_info(user)")]
+        column_names = [x[1] for x in self.__conn.execute("PRAGMA table_info(user)") if x[1] != "user_id"]
         param_dict = dict({key: value for key, value in kwargs.items() if key in column_names})
+        param_dict["user_id"] = user_id
 
         stmt = "UPDATE user SET " + " = ?, ".join(param_dict.keys()) + " = ? WHERE user_id = ?"
         args = []

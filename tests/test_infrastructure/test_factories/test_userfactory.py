@@ -56,10 +56,6 @@ class UserFactoryTest(unittest.TestCase):
         self.assertEqual(user.message_id, self.message_id)
         self.assertEqual(user.post_id, self.post_id)
 
-    def test_factory_disassembles_user_successfully(self):
-        self.assertEqual(self.kwargs, self.factory.disassemble(self.factory.assemble(*self.args)))
-        self.assertEqual(self.kwargs, self.factory.disassemble(self.factory.assemble(**self.kwargs)))
-
 
 if __name__ == '__main__':
     unittest.main()

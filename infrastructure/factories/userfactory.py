@@ -25,6 +25,3 @@ class UserFactory(IFactory):
             raise ValueError("Invalid parameter combination. Exactly one of *args or **kwargs must be specified.")
 
         return user
-
-    def disassemble(self, user):
-        return {key: value for key, value in user.to_dict().items() if key != "posts"}

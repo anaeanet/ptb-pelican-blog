@@ -60,10 +60,6 @@ class ImageFactoryTest(unittest.TestCase):
         self.assertEqual(image.thumb_id, self.image_thumb_id)
         self.assertEqual(image.caption, self.image_caption)
 
-    def test_factory_disassembles_image_successfully(self):
-        self.assertEqual(self.kwargs, self.factory.disassemble(self.factory.assemble(*self.args)))
-        self.assertEqual(self.kwargs, self.factory.disassemble(self.factory.assemble(**self.kwargs)))
-
 
 if __name__ == '__main__':
     unittest.main()

@@ -62,6 +62,13 @@ class ImageRepositoryTest(unittest.TestCase):
         self.assertEqual(updated_image, self.repo.get_image_by_id(self.image_id))
         self.assertNotEqual(self.image, self.repo.get_image_by_id(self.image_id))
 
+    def test_image_updated_successfully_2(self):
+        self.assertTrue(self.repo.save_image(self.image))
+        self.assertEqual(self.image, self.repo.get_image_by_id(self.image_id))
+        self.assertTrue(self.repo.update_image(self.image.image_id, name=self.image.name))
+        self.assertEqual(self.image.name, self.repo.get_image_by_id(self.image_id).name)
+        #self.assertNotEqual(self.image, self.repo.get_image_by_id(self.image_id))
+
 
 if __name__ == '__main__':
     unittest.main()

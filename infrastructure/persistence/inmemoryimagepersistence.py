@@ -21,13 +21,15 @@ class InMemoryImagePersistence(IImagePersistence):
 
     def persist(self, **image_data):
         pk = "image_id"
-        result = False
 
-        if image_data and pk in image_data:
+        image = self.__data[image_data[pk]] if pk in image_data and image_data[pk] in self.__data else None
+        if not image:
             self.__data[image_data[pk]] = image_data
-            result = True
+        else:
+            for key, value in image_data.items():
+                self.__data[image_data[pk]][key] = value
 
-        return result
+        return True
 
     def retrieve(self, **filters):
         return [v for v in self.__data.values() if self.__matches_filters(v, **filters)]

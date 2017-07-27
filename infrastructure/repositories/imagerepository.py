@@ -23,7 +23,10 @@ class ImageRepository(IImageRepository):
         return self.__factory.assemble(**self.__persistence.retrieve_by_id(image_id))
 
     def save_image(self, image):
-        return self.__persistence.persist(**self.__factory.disassemble(image))
+        return self.__persistence.persist(**image.to_dict())
+
+    def update_image(self, image_id, **update_params):
+        return self.__persistence.persist(image_id=image_id, **update_params)
 
     def remove_image(self, image_id):
         return self.__persistence.delete(image_id)

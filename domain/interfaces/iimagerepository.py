@@ -18,5 +18,9 @@ class IImageRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def update_image(self, image_id, **update_params):
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def remove_image(self, id):
         raise NotImplementedError

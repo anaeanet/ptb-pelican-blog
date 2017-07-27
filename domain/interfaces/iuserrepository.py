@@ -18,5 +18,9 @@ class IUserRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def update_user(self, user_id, **update_params):
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def remove_user(self, user_id):
         raise NotImplementedError

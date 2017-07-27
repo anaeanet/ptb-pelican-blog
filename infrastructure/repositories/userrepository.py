@@ -21,7 +21,10 @@ class UserRepository(IUserRepository):
         return self.__factory.assemble(**self.__persistence.retrieve_by_id(user_id))
 
     def save_user(self, user):
-        return self.__persistence.persist(**self.__factory.disassemble(user))
+        return self.__persistence.persist(**user.to_dict())
+
+    def update_user(self, user_id, **update_params):
+        return self.__persistence.persist(user_id=user_id, **update_params)
 
     def remove_user(self, user_id):
         return self.__persistence.delete(user_id)

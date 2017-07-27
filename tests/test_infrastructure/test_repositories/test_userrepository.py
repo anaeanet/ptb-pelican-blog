@@ -51,5 +51,12 @@ class UserRepositoryTest(unittest.TestCase):
         self.assertEqual(updated_user, self.repo.get_user_by_id(self.user_id))
         self.assertNotEqual(self.user, self.repo.get_user_by_id(self.user_id))
 
+    def test_user_updated_successfully_2(self):
+        self.assertTrue(self.repo.save_user(self.user))
+        self.assertEqual(self.user, self.repo.get_user_by_id(self.user_id))
+        self.assertTrue(self.repo.update_user(self.user.user_id, user_name=self.user.user_name+"_updated"))
+        self.assertEqual(self.user.user_name+"_updated", self.repo.get_user_by_id(self.user_id).user_name)
+        self.assertNotEqual(self.user, self.repo.get_user_by_id(self.user_id))
+
 if __name__ == '__main__':
     unittest.main()
